@@ -7,8 +7,14 @@ function ctrl_c(){
 
 trap ctrl_c INT
 
-#Variables_Globales
-ip="10.197.243.77"
+#Comprobación del número de argumentos
+if [[ $# -ne 1 ]]; then
+    echo "Uso: $0 <IP>"
+    exit 1
+fi
+
+#Asignación de argumento a variable
+ip="$1"
 
 for port in $(seq 1 65535); do
         timeout 1 bash -c "echo '' > /dev/tcp/$ip/$port" 2>/dev/null && echo "Puerto $port Abierto" &
